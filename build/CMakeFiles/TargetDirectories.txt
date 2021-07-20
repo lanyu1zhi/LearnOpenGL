@@ -1,0 +1,16 @@
+G:/VSCode/LearnOpenGL/build/CMakeFiles/edit_cache.dir
+G:/VSCode/LearnOpenGL/build/CMakeFiles/rebuild_cache.dir
+G:/VSCode/LearnOpenGL/build/extern/glad/CMakeFiles/glad.dir
+G:/VSCode/LearnOpenGL/build/extern/glad/CMakeFiles/edit_cache.dir
+G:/VSCode/LearnOpenGL/build/extern/glad/CMakeFiles/rebuild_cache.dir
+G:/VSCode/LearnOpenGL/build/extern/glfw/CMakeFiles/rebuild_cache.dir
+G:/VSCode/LearnOpenGL/build/extern/glfw/CMakeFiles/glfw.dir
+G:/VSCode/LearnOpenGL/build/extern/glfw/CMakeFiles/edit_cache.dir
+G:/VSCode/LearnOpenGL/build/extern/glm/CMakeFiles/edit_cache.dir
+G:/VSCode/LearnOpenGL/build/extern/glm/CMakeFiles/rebuild_cache.dir
+G:/VSCode/LearnOpenGL/build/extern/glm/glm/CMakeFiles/edit_cache.dir
+G:/VSCode/LearnOpenGL/build/extern/glm/glm/CMakeFiles/glm_static.dir
+G:/VSCode/LearnOpenGL/build/extern/glm/glm/CMakeFiles/rebuild_cache.dir
+G:/VSCode/LearnOpenGL/build/src/CMakeFiles/learnGL.dir
+G:/VSCode/LearnOpenGL/build/src/CMakeFiles/edit_cache.dir
+G:/VSCode/LearnOpenGL/build/src/CMakeFiles/rebuild_cache.dir
