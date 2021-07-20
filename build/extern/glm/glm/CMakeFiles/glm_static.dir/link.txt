@@ -1,2 +1,0 @@
-D:\Software\MinGW64\x86_64-w64-mingw32\bin\ar.exe qc libglm_static.a  CMakeFiles/glm_static.dir/detail/glm.cpp.obj
-D:\Software\MinGW64\x86_64-w64-mingw32\bin\ranlib.exe libglm_static.a
