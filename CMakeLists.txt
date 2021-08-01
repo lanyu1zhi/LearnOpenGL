@@ -4,6 +4,8 @@ project (HelloGL)
 
 set(CMAKE_BUILD_TYPE "Debug")
 
+set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES} .dll)
+
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 add_subdirectory(extern/assimp)

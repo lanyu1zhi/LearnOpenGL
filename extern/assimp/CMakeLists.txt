@@ -1,8 +1,8 @@
 
 find_path(assimp_include assimp/mesh.h ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-find_library(libassimp_lib NAMES libassimp PATHS ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+find_library(assimp NAMES libassimp.dll PATHS ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
-# message(status " libassimp_lib " ${libassimp_lib})
+# message(status " assimp_lib " ${assimp})
 
-file(COPY ${libassimp_lib} DESTINATION ${EXECUTABLE_OUTPUT_PATH})
+file(COPY ${assimp} DESTINATION ${EXECUTABLE_OUTPUT_PATH})
