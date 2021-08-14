@@ -2,6 +2,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include <iostream>
+#include <map>
 
 #include "glad/glad.h"
 #include "glfw/glfw3.h"
@@ -72,11 +73,13 @@ int main(int argc, const char *argv[])
 
     // configure global opengl state
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // build and compile shaders
     std::string basePath = getcwd(NULL, 0);
-    std::string vshPath = basePath + "/shaders/shaders4/3.discard.vs";
-    std::string fshPath = basePath + "/shaders/shaders4/3.discard.fs";
+    std::string vshPath = basePath + "/shaders/shaders4/4.blend.vs";
+    std::string fshPath = basePath + "/shaders/shaders4/4.blend.fs";
     Shader shader(vshPath.c_str(), fshPath.c_str());
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
@@ -188,11 +191,11 @@ int main(int argc, const char *argv[])
     // load textures
     unsigned int cubeTexture = loadTexture(basePath + "/resources/textures/marble.jpg");
     unsigned int planeTexture = loadTexture(basePath + "/resources/textures/metal.png");
-    unsigned int transparentTexture = loadTexture(basePath + "/resources/textures/grass.png");
+    unsigned int transparentTexture = loadTexture(basePath + "/resources/textures/window.png");
 
-    // transparent vegetation locations
+    // transparent windows locations
     // --------------------------------
-    std::vector<glm::vec3> vegetation 
+    std::vector<glm::vec3> windows 
     {
         glm::vec3(-1.5f, 0.0f, -0.48f),
         glm::vec3( 1.5f, 0.0f, 0.51f),
@@ -224,7 +227,17 @@ int main(int argc, const char *argv[])
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // set uniform
+        // sort the transparent windows before rendering
+        // ---------------------------------------------
+        std::map<float, glm::vec3> sorted;
+        for (unsigned int i = 0; i < windows.size(); i++)
+        {
+            float distance = glm::length(camera.Position - windows[i]);
+            sorted[distance] = windows[i];
+        }
+
+        // draw objects
+        // ---------------------------------------------
         glm::mat4 view = camera.GetViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f);
 
@@ -236,6 +249,7 @@ int main(int argc, const char *argv[])
         glBindVertexArray(cubeVAO);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, cubeTexture);
+        model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
         shader.setMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -251,13 +265,13 @@ int main(int argc, const char *argv[])
         shader.setMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
-        // vegetation
+        // windows 
         glBindVertexArray(transparentVAO);
         glBindTexture(GL_TEXTURE_2D, transparentTexture);
-        for (unsigned int i = 0; i < vegetation.size(); i++)
+        for (std::map<float, glm::vec3>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)
         {
             model = glm::mat4(1.0f);
-            model = glm::translate(model, vegetation[i]);
+            model = glm::translate(model, it->second);
             shader.setMat4("model", model);
             glDrawArrays(GL_TRIANGLES, 0, 6);
         }
@@ -270,8 +284,10 @@ int main(int argc, const char *argv[])
 
     glDeleteVertexArrays(1, &cubeVAO);
     glDeleteVertexArrays(1, &planeVAO);
+    glDeleteVertexArrays(1, &transparentVAO);
     glDeleteBuffers(1, &cubeVBO);
     glDeleteBuffers(1, &planeVBO);
+    glDeleteBuffers(1, &transparentVBO);
 
     glfwTerminate();
     return 0;
